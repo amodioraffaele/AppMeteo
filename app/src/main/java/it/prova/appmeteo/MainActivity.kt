@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                     ) + "/" + stringa.removeRange(4, 8)
                     updateUI(request, string, data, nome)
                 } else{
-                    update1()
+                    update1(nome)
                 }
                 inputStreamReader.close()
                 inputSystem.close()
@@ -95,9 +95,10 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun update1() {
+    private fun update1(name: String) {
         runOnUiThread {
             kotlin.run{
+                binding.ok.visibility = View.INVISIBLE
                 binding.meteoo.text = "Cap non riconosciuto"
                 val immagine = findViewById<View>(R.id.immagine) as ImageView
                 immagine.visibility = View.GONE
@@ -109,6 +110,7 @@ class MainActivity : AppCompatActivity() {
     private fun updateUI(request: Request, stringa: String, data: String, nome: String) {
         runOnUiThread {
             kotlin.run {
+                binding.ok.visibility = View.VISIBLE
                 binding.ok.text = "il meteo di $nome è:"
                 binding.lastupdate.text = "ultimo aggiornamento: " + stringa
                 binding.meteoo.text =  request.forecast.text.it
