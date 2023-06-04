@@ -111,7 +111,17 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             kotlin.run {
                 binding.ok.visibility = View.VISIBLE
-                binding.ok.text = "il meteo di $nome è:"
+                when(request.forecast.text.it){
+                    "Nuvoloso" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è previsto un cielo:"
+                    "Rovesci" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} sono previsti:"
+                    "Pioggia" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è prevista:"
+                    "Soleggiato" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è previsto un cielo:"
+                    "Sereno" -> binding.ok.text = "Il cielo previsto a ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è:"
+                    else -> {
+                        binding.ok.text = "Meteo previsto a ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()}:"
+                    }
+
+                }
                 binding.lastupdate.text = "ultimo aggiornamento: " + stringa
                 binding.meteoo.text =  request.forecast.text.it
                 val url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/it000/plot/image?output=gen&opt=bars&date=$data"
