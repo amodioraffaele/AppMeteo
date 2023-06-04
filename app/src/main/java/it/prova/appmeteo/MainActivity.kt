@@ -60,7 +60,35 @@ class MainActivity : AppCompatActivity() {
                         4,
                         6
                     ) + "/" + stringa.removeRange(4, 8)
-                    updateUI(request, string, data, nome)
+                    val stringameteo = when(request.forecast.text.it) {
+                        "Nuvoloso" -> "A ${
+                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
+                        } è previsto un cielo:"
+                        "Rovesci" -> "A ${
+                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
+                        } sono previsti:"
+                        "Pioggia" -> "A ${
+                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
+                        } è prevista:"
+                        "Soleggiato" -> "A ${
+                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
+                        } è previsto un cielo:"
+                        "Sereno" -> "Il cielo previsto a ${
+                            nome.substring(0, 1) + nome.substring(
+                                1,
+                                nome.length
+                            ).toLowerCase()
+                        } è:"
+                        else -> {
+                            "Meteo previsto a ${
+                                nome.substring(0, 1) + nome.substring(
+                                    1,
+                                    nome.length
+                                ).toLowerCase()
+                            }:"
+                        }
+                    }
+                    updateUI(request, string, data, stringameteo)
                 } else{
                     update1()
                 }
@@ -107,21 +135,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun updateUI(request: Request, stringa: String, data: String, nome: String) {
+    private fun updateUI(request: Request, stringa: String, data: String, stringameteo: String) {
         runOnUiThread {
             kotlin.run {
                 binding.ok.visibility = View.VISIBLE
-                when(request.forecast.text.it){
-                    "Nuvoloso" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è previsto un cielo:"
-                    "Rovesci" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} sono previsti:"
-                    "Pioggia" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è prevista:"
-                    "Soleggiato" -> binding.ok.text = "A ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è previsto un cielo:"
-                    "Sereno" -> binding.ok.text = "Il cielo previsto a ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()} è:"
-                    else -> {
-                        binding.ok.text = "Meteo previsto a ${nome.substring(0,1) + nome.substring(1, nome.length).toLowerCase()}:"
-                    }
-
-                }
+                binding.ok.text = stringameteo
                 binding.lastupdate.text = "ultimo aggiornamento: " + stringa
                 binding.meteoo.text =  request.forecast.text.it
                 val url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/it000/plot/image?output=gen&opt=bars&date=$data"
