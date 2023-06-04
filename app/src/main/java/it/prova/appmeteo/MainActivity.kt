@@ -62,7 +62,7 @@ class MainActivity : AppCompatActivity() {
                     ) + "/" + stringa.removeRange(4, 8)
                     updateUI(request, string, data, nome)
                 } else{
-                    update1(nome)
+                    update1()
                 }
                 inputStreamReader.close()
                 inputSystem.close()
@@ -95,7 +95,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun update1(name: String) {
+    private fun update1() {
         runOnUiThread {
             kotlin.run{
                 binding.ok.visibility = View.INVISIBLE
