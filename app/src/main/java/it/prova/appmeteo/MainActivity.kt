@@ -79,6 +79,16 @@ class MainActivity : AppCompatActivity() {
                                 nome.length
                             ).toLowerCase()
                         } è:"
+                        "Molto nuvoloso" -> "Il cielo previsto a ${
+                                nome.substring(0, 1) + nome.substring(
+                                    1,
+                                    nome.length
+                                ).toLowerCase()} è:"
+                        "Coperto" -> "il cielo di ${
+                            nome.substring(0, 1) + nome.substring(
+                                1,
+                                nome.length
+                            ).toLowerCase()} è:"
                         else -> {
                             "Meteo previsto a ${
                                 nome.substring(0, 1) + nome.substring(
