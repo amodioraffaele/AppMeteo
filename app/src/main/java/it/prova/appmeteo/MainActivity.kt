@@ -20,9 +20,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        binding.but.setOnClickListener() {
-            var c = binding.CapInput.text.toString()
+        binding.but.setOnClickListener {
+            val c = binding.CapInput.text.toString()
             codice(c).start()
         }
 
@@ -44,7 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun Tempo1(comune: String, nome: String): Thread {
+    private fun Tempo1(comune: String, nome_nor: String): Thread {
         return Thread {
             val url = URL("https://api.meteo.uniparthenope.it//products/wrf5/forecast/$comune")
             val connection = url.openConnection() as HttpsURLConnection
@@ -60,45 +59,20 @@ class MainActivity : AppCompatActivity() {
                         4,
                         6
                     ) + "/" + stringa.removeRange(4, 8)
+                    var nome =  nome_nor.substring(0, 1) + nome_nor.substring(1, nome_nor.length).lowercase()
                     val stringameteo = when(request.forecast.text.it) {
-                        "Nuvoloso" -> "A ${
-                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
-                        } è previsto un cielo:"
-                        "Rovesci" -> "A ${
-                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
-                        } sono previsti:"
-                        "Pioggia" -> "A ${
-                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
-                        } è prevista:"
-                        "Soleggiato" -> "A ${
-                            nome.substring(0, 1) + nome.substring(1, nome.length).toLowerCase()
-                        } è previsto un cielo:"
-                        "Sereno" -> "Il cielo previsto a ${
-                            nome.substring(0, 1) + nome.substring(
-                                1,
-                                nome.length
-                            ).toLowerCase()
-                        } è:"
-                        "Molto nuvoloso" -> "Il cielo previsto a ${
-                                nome.substring(0, 1) + nome.substring(
-                                    1,
-                                    nome.length
-                                ).toLowerCase()} è:"
-                        "Coperto" -> "il cielo di ${
-                            nome.substring(0, 1) + nome.substring(
-                                1,
-                                nome.length
-                            ).toLowerCase()} è:"
+                        "Nuvoloso" -> "A ${nome} è previsto un cielo:"
+                        "Rovesci" -> "A ${nome} sono previsti:"
+                        "Pioggia" -> "A ${nome} è prevista:"
+                        "Soleggiato" -> "A ${nome} è previsto un cielo:"
+                        "Sereno" -> "Il cielo previsto a ${nome} è:"
+                        "Molto nuvoloso" -> "Il cielo previsto a ${nome} è:"
+                        "Coperto" -> "il cielo di ${nome} è:"
                         else -> {
-                            "Meteo previsto a ${
-                                nome.substring(0, 1) + nome.substring(
-                                    1,
-                                    nome.length
-                                ).toLowerCase()
-                            }:"
+                            "Meteo previsto a ${nome}:"
                         }
                     }
-                    updateUI(request, string, data, stringameteo)
+                    updateUI(request, string, stringameteo, data)
                 } else{
                     update1()
                 }
@@ -145,23 +119,31 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun updateUI(request: Request, stringa: String, data: String, stringameteo: String) {
+    private fun updateUI(request: Request, stringa: String, stringameteo: String, data: String) {
         runOnUiThread {
             kotlin.run {
                 binding.ok.visibility = View.VISIBLE
                 binding.ok.text = stringameteo
-                binding.lastupdate.text = "ultimo aggiornamento: " + stringa
+                binding.lastupdate.text = "ultimo aggiornamento: $stringa "
                 binding.meteoo.text =  request.forecast.text.it
-                val url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/it000/plot/image?output=gen&opt=bars&date=$data"
+                immagine(data)
                 val immagine = findViewById<View>(R.id.immagine) as ImageView
                 immagine.visibility = View.VISIBLE
-                Picasso.with(binding.root.context).load(url).into(immagine)
+
+
             }
         }
+    }
+
+    private fun immagine(data: String) {
+        val url = "https://api.meteo.uniparthenope.it/products/wrf5/forecast/it000/plot/image?output=gen&opt=bars&date=${data}"
+        val immagine = findViewById<View>(R.id.immagine) as ImageView
+        Picasso.with(binding.root.context).load(url).into(immagine)
     }
 
 }
 
 
-
-
+class Data(
+   var anno: String = "z"
+)
