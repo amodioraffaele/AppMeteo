@@ -54,22 +54,22 @@ class MainActivity : AppCompatActivity() {
                 if (request.result == "ok") {
                     var stringa = request.forecast.iDate
                     stringa = stringa.removeRange(8, 11)
-                    var data = stringa + "Z1400"
+                    val data = stringa + "Z1400"
                     val string = stringa.removeRange(0, 6) + "/" + stringa.substring(
                         4,
                         6
                     ) + "/" + stringa.removeRange(4, 8)
-                    var nome =  nome_nor.substring(0, 1) + nome_nor.substring(1, nome_nor.length).lowercase()
+                    val nome =  nome_nor.substring(0, 1) + nome_nor.substring(1, nome_nor.length).lowercase()
                     val stringameteo = when(request.forecast.text.it) {
-                        "Nuvoloso" -> "A ${nome} è previsto un cielo:"
-                        "Rovesci" -> "A ${nome} sono previsti:"
-                        "Pioggia" -> "A ${nome} è prevista:"
-                        "Soleggiato" -> "A ${nome} è previsto un cielo:"
-                        "Sereno" -> "Il cielo previsto a ${nome} è:"
-                        "Molto nuvoloso" -> "Il cielo previsto a ${nome} è:"
-                        "Coperto" -> "il cielo di ${nome} è:"
+                        "Nuvoloso" -> "A $nome è previsto un cielo:"
+                        "Rovesci" -> "A $nome sono previsti:"
+                        "Pioggia" -> "A $nome è prevista:"
+                        "Soleggiato" -> "A $nome è previsto un cielo:"
+                        "Sereno" -> "Il cielo previsto a $nome è:"
+                        "Molto nuvoloso" -> "Il cielo previsto a $nome è:"
+                        "Coperto" -> "il cielo di $nome è:"
                         else -> {
-                            "Meteo previsto a ${nome}:"
+                            "Meteo previsto a $nome:"
                         }
                     }
                     updateUI(request, string, stringameteo, data)
@@ -88,7 +88,7 @@ class MainActivity : AppCompatActivity() {
         runOnUiThread {
             kotlin.run {
                 val menu = findViewById<Spinner>(R.id.scelta)
-                var scelte : MutableList<String> = ArrayList()
+                val scelte : MutableList<String> = ArrayList()
                 for(i in 0 until request.size){
                     scelte.add(i, request[i].name.it)
                 }
@@ -144,6 +144,3 @@ class MainActivity : AppCompatActivity() {
 }
 
 
-class Data(
-   var anno: String = "z"
-)
