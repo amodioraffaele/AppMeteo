@@ -59,7 +59,13 @@ class MainActivity : AppCompatActivity() {
                         4,
                         6
                     ) + "/" + stringa.removeRange(4, 8)
-                    val nome =  nome_nor.substring(0, 1) + nome_nor.substring(1, nome_nor.length).lowercase()
+                    var nome: String
+                    if(nome_nor == nome_nor.uppercase() ) {
+                         nome = nome_nor.substring(0, 1) + nome_nor.substring(1, nome_nor.length)
+                            .lowercase()
+                    } else{
+                        nome = nome_nor
+                    }
                     val stringameteo = when(request.forecast.text.it) {
                         "Nuvoloso" -> "A $nome è previsto un cielo:"
                         "Rovesci" -> "A $nome sono previsti:"
