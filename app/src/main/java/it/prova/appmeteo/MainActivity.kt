@@ -34,7 +34,11 @@ class MainActivity : AppCompatActivity() {
                 val inputSystem = connection.inputStream
                 val inputStreamReader = InputStreamReader(inputSystem, "UTF-8")
                 val request = Gson().fromJson(inputStreamReader, comuni::class.java)
-                scelta(request)
+                val scelte : MutableList<String> = ArrayList()
+                for(i in 0 until request.size){
+                    scelte.add(i, request[i].name.it)
+                }
+                scelta(request, scelte)
             }
             else {
                 binding.meteoo.text  = "Connessione non riuscita"
@@ -90,14 +94,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun scelta(request: comuni) {
+    private fun scelta(request: comuni, scelte: MutableList<String>) {
         runOnUiThread {
             kotlin.run {
                 val menu = findViewById<Spinner>(R.id.scelta)
-                val scelte : MutableList<String> = ArrayList()
-                for(i in 0 until request.size){
-                    scelte.add(i, request[i].name.it)
-                }
                 val dropmenu = ArrayAdapter(binding.root.context, android.R.layout.simple_dropdown_item_1line,scelte)
                 menu.adapter = dropmenu
                 menu.onItemSelectedListener = object : OnItemSelectedListener{
