@@ -59,7 +59,7 @@ class MainActivity : AppCompatActivity() {
                     var stringa = request.forecast.dateTime
                     val data = stringa
                     stringa = stringa.removeRange(8, 13)
-                    val string = stringa.removeRange(0, 6) + "/" + stringa.substring(
+                    stringa = stringa.removeRange(0, 6) + "/" + stringa.substring(
                         4,
                         6
                     ) + "/" + stringa.removeRange(4, 8)
@@ -82,7 +82,7 @@ class MainActivity : AppCompatActivity() {
                             "Meteo previsto a $nome:"
                         }
                     }
-                    updateUI(request, string, stringameteo, data)
+                    updateUI(request, stringa, stringameteo, data)
                 } else{
                     update1()
                 }
