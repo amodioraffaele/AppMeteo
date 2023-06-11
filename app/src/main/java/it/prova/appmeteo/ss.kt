@@ -1,6 +1,6 @@
 package it.prova.appmeteo
 
 class ss (
-    var iDate: String,
+    var dateTime: String,
     var text: meteo
 )

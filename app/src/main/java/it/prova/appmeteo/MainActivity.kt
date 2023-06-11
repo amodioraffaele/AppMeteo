@@ -56,9 +56,9 @@ class MainActivity : AppCompatActivity() {
                 val inputStreamReader = InputStreamReader(inputSystem, "UTF-8")
                 val request = Gson().fromJson(inputStreamReader, Request::class.java)
                 if (request.result == "ok") {
-                    var stringa = request.forecast.iDate
-                    stringa = stringa.removeRange(8, 11)
-                    val data = stringa + "Z1400"
+                    var stringa = request.forecast.dateTime
+                    val data = stringa
+                    stringa = stringa.removeRange(8, 13)
                     val string = stringa.removeRange(0, 6) + "/" + stringa.substring(
                         4,
                         6
